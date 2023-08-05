@@ -23,6 +23,7 @@ Drawer getDrawer(BuildContext context) {
         ),
         ListTile(
           title: const Text('Calendar'),
+          leading: const Icon(Icons.calendar_month_outlined),
           trailing: StaticVariables.pageSelectedIndex == 0
             ? 
             const Icon(Icons.check)
@@ -48,6 +49,7 @@ Drawer getDrawer(BuildContext context) {
         ),
         ListTile(
           title: const Text('List all events', style: TextStyle(),),
+          leading: const Icon(Icons.list),
           trailing: StaticVariables.pageSelectedIndex == 1
             ? 
             const Icon(Icons.check)
@@ -73,6 +75,7 @@ Drawer getDrawer(BuildContext context) {
         ),
         ListTile(
           title: const Text('Settings', style: TextStyle(),),
+          leading: const Icon(Icons.settings),
           trailing: StaticVariables.pageSelectedIndex == 2
             ? 
             const Icon(Icons.check,)

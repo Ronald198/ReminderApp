@@ -234,14 +234,11 @@ class _HomePageState extends State<HomePage> {
           context: context, 
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Add a new event", style: TextStyle(color: Colors.white),),
-              backgroundColor: ReminderAppPalette.mainColor,
+              title: const Text("Add a new event", style: TextStyle(fontWeight: FontWeight.bold),),
               content: TextField(
                 decoration: const InputDecoration(
                   hintText: "Add description",
-                  hintStyle: TextStyle(color: Color.fromARGB(96, 236, 236, 236))
                 ),
-                style: const TextStyle(color: Colors.white),
                 controller: eventDescriptionController,
                 keyboardType: TextInputType.multiline,
                 maxLines: null,

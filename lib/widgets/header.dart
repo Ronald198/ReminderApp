@@ -24,7 +24,7 @@ PreferredSizeWidget getHeader(BuildContext context) {
                 )
               );
             }, 
-            splashRadius: 23,
+            splashRadius: 24,
             icon: const Icon(Icons.calendar_today_rounded, size: 28,),
           ),
           Padding(padding: const EdgeInsets.only(top: 5), child:Text(now.day.toString())) 

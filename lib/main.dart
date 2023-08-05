@@ -1,22 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:reminderapp/constants.dart';
 import 'package:reminderapp/pages/home_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StaticVariables {
   static int pageSelectedIndex = 0;
-  static String daySelected = "${DateTime.now().month}_${DateTime.now().day}"; //by default is the current day -> MM_DD format
 }
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+  if (
+    !prefs.containsKey("appTheme")
+  )
+  {
+    await prefs.setInt("appTheme", 2); //system's theme
+  }
+
   runApp(
-    const ReminderMain()
+    ReminderMain(prefs: prefs,)
   );
 }
 
 class ReminderMain extends StatefulWidget {
-  const ReminderMain({super.key});
+  final SharedPreferences prefs;
+
+  const ReminderMain({super.key, required this.prefs});
 
   @override
   State<ReminderMain> createState() => _ReminderMainState();
@@ -31,6 +42,23 @@ class _ReminderMainState extends State<ReminderMain> {
     setState(() {
       _themeMode = themeMode;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    switch (widget.prefs.getInt("appTheme")) {
+      case 0:
+        _themeMode = ThemeMode.light;
+        break;
+      case 1:
+        _themeMode = ThemeMode.dark;
+        break;
+      case 2:
+        _themeMode = ThemeMode.system;
+        break;
+    }
   }
 
   @override
@@ -61,10 +89,15 @@ class _ReminderMainState extends State<ReminderMain> {
           iconColor: Colors.black
         ),
         inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(color: Colors.black)
+          labelStyle: TextStyle(color: Colors.black),
+          hintStyle: TextStyle(color: Color.fromARGB(255, 105, 102, 102))
         ),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: ReminderAppPalette.mainColor
+        ),
+        dialogTheme: const DialogTheme(
+          backgroundColor: Colors.white,
+          titleTextStyle: TextStyle(color: ReminderAppPalette.mainColor),
         ),
       ),
       darkTheme: ThemeData(
@@ -74,17 +107,19 @@ class _ReminderMainState extends State<ReminderMain> {
           bodySmall: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
           bodyLarge: TextStyle(color: Colors.white),
+          titleMedium: TextStyle(color: Colors.white),
         ),
         textTheme: const TextTheme(
           bodySmall: TextStyle(color: Colors.white),
           bodyMedium: TextStyle(color: Colors.white),
           bodyLarge: TextStyle(color: Colors.white),
+          titleMedium: TextStyle(color: Colors.white),
         ),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(ReminderAppPalette.mainColor),
             foregroundColor: MaterialStateProperty.all(Colors.white),
-            overlayColor: MaterialStateProperty.resolveWith((states) => const Color.fromARGB(178, 17, 35, 100))
+            overlayColor: MaterialStateProperty.all(const Color.fromARGB(178, 17, 35, 100)),
           )
         ),
         appBarTheme: const AppBarTheme(
@@ -104,7 +139,8 @@ class _ReminderMainState extends State<ReminderMain> {
           textColor: Colors.white,
         ),
         inputDecorationTheme: const InputDecorationTheme(
-          labelStyle: TextStyle(color: Colors.white)
+          labelStyle: TextStyle(color: Colors.white),
+          hintStyle: TextStyle(color: Color.fromARGB(96, 236, 236, 236))
         ),
         cardTheme: const CardTheme(
           color: Color.fromARGB(255, 31, 29, 29),
@@ -113,6 +149,14 @@ class _ReminderMainState extends State<ReminderMain> {
         dividerColor: const Color.fromARGB(120, 255, 255, 255),
         progressIndicatorTheme: const ProgressIndicatorThemeData(
           color: Colors.white
+        ),
+        radioTheme: RadioThemeData(
+          fillColor: MaterialStateProperty.all(Colors.white),
+          overlayColor: MaterialStateProperty.all(Colors.white),
+        ),
+        dialogTheme: const DialogTheme(
+          backgroundColor: ReminderAppPalette.mainColor,
+          titleTextStyle: TextStyle(color: Colors.white)
         ),
       ),
       themeMode: _themeMode,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:reminderapp/constants.dart';
 import 'package:reminderapp/databaseHelper.dart';
 import 'package:reminderapp/models/event.dart';
 import 'package:reminderapp/widgets/drawer.dart';
